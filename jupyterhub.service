@@ -1,0 +1,12 @@
+[Unit]
+Description=JupyterHub
+After=network-online.target
+
+[Service]
+User=jupyter
+Environment=NLTK_DATA=/opt/jupyter/nltk_data
+ExecStart=/opt/jupyter/jupyterhub.sh
+WorkingDirectory=/opt/jupyter
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Unit]
+Description="Cull inactive Jupyter single-user sessions"
+After=jupyter.target
+
+[Service]
+User=jupyter
+ExecStart=/opt/jupyter/cull_idle_servers.sh
+WorkingDirectory=/opt/jupyter
+
+[Install]
+WantedBy=multi-user.target

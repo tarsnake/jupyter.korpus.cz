@@ -1,0 +1,68 @@
+##
+# jupyter.korpus.cz
+##
+
+# proxy config for RStudio suggests this (?)
+map $http_upgrade $connection_upgrade {
+  default upgrade;
+  '' close;
+}
+
+# force upgrade to secure connection
+server {
+  listen 80;
+  server_name jupyter.korpus.cz;
+  return 301 https://jupyter.korpus.cz$request_uri;
+}
+
+server {
+  server_name jupyter.korpus.cz;
+  listen 443 ssl default_server;
+  listen [::]:443 ssl default_server;
+
+  ssl_certificate /etc/letsencrypt/live/jupyter.korpus.cz/cert.pem;
+  ssl_certificate_key /etc/letsencrypt/live/jupyter.korpus.cz/privkey.pem;
+
+  root /var/www/html;
+
+  # Add index.php to the list if you are using PHP
+  index index.html index.htm index.nginx-debian.html;
+
+  # location / {
+  #   # First attempt to serve request as file, then
+  #   # as directory, then fall back to displaying a 404.
+  #   try_files $uri $uri/ =404;
+  # }
+
+  location / {
+    # rewrite ^/j/(.*)$ /$1 break;
+    proxy_pass http://localhost:8989/;
+    # see http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_redirect
+    # in general, if 404s turn up, just inspect what redirects are being
+    # issued using a browser and tweak this directive to make it rewrite them
+    # proxy_redirect / /j/;
+    # sub_filter "/hub/" "/j/hub/";
+    # sub_filter_once off;
+    # these are needed for websockets to work
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    # this seems necessary for communicating with the session API (?)
+    proxy_set_header Host $host;
+    # these were found in other people's Nginx JupterHub configs, but they
+    # don't seem to be necessary
+    proxy_buffering off;
+    proxy_set_header X-NginX-Proxy true;
+  }
+
+  location /r/ {
+    rewrite ^/r/(.*)$ /$1 break;
+    proxy_pass http://localhost:8787;
+    proxy_redirect http://localhost:8787/ $scheme://$host/r/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_read_timeout 20d;
+  }
+
+}

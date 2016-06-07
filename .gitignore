@@ -1,0 +1,5 @@
+venv
+nltk_data
+*.deleteme
+debug
+*.sqlite
