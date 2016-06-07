@@ -1,3 +1,25 @@
+# Overview
+
+This is a working setup of
+[JupyterHub](https://github.com/jupyterhub/jupyterhub) for a public facing
+server running Ubuntu 16.04, with Nginx as a reverse proxy and Python 3.
+Currently, this README is more of a reminder to myself should the config on the
+production server ever get nuked, but if you're interested in replicating it on
+your own box, drop me a line, I'll be glad to help! Features include:
+
+- encryption with letsencrypt
+- controlling via systemd
+- culling idle single user servers
+- shared directory with the NLTK data packages
+- possibility to run additional services (like RStudio) under subpaths (see
+  `./jupyter.nginx`)
+
+# Notes
+
+This entire directory should be placed at `/opt/jupyter` on the server. A
+Python 3 virtualenv is expected under `./venv`, and the NLTK data directory
+under `./nltk_data`.
+
 When installing in a virtualenv and running JupyterHub without root privileges
 (see [JupyterHub wiki](https://github.com/jupyterhub/jupyterhub/wiki/Using-sudo-to-run-JupyterHub-without-root-privileges)),
 it is **absolutely necessary** to add the virtualenv bin directory to the
