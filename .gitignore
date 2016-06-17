@@ -3,3 +3,4 @@ nltk_data
 *.deleteme
 debug
 *.sqlite
+jupyterhub_cookie_secret
