@@ -1,9 +1,9 @@
 #!/bin/sh
 
-service nginx stop
+systemctl stop nginx
 letsencrypt renew -nvv --standalone > /var/log/letsencrypt/renew.log 2>&1
 LE_STATUS=$?
-service nginx start
+systemctl start nginx
 if [ "$LE_STATUS" != 0 ]; then
     echo Automated letsencrypt renewal failed:
     cat /var/log//letsencrypt/renew.log
