@@ -20,19 +20,13 @@ server {
   listen 443 ssl default_server;
   listen [::]:443 ssl default_server;
 
-  ssl_certificate /etc/letsencrypt/live/jupyter.korpus.cz/cert.pem;
+  ssl_certificate /etc/letsencrypt/live/jupyter.korpus.cz/fullchain.pem;
   ssl_certificate_key /etc/letsencrypt/live/jupyter.korpus.cz/privkey.pem;
 
   root /var/www/html;
 
   # Add index.php to the list if you are using PHP
   index index.html index.htm index.nginx-debian.html;
-
-  # location / {
-  #   # First attempt to serve request as file, then
-  #   # as directory, then fall back to displaying a 404.
-  #   try_files $uri $uri/ =404;
-  # }
 
   location / {
     # rewrite ^/j/(.*)$ /$1 break;
@@ -65,4 +59,78 @@ server {
     proxy_read_timeout 20d;
   }
 
+  location /shiny/ {
+    rewrite ^/shiny/(.*)$ /$1 break;
+    proxy_pass http://localhost:3838;
+    proxy_redirect http://localhost:3838/ $scheme://$host/shiny/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_read_timeout 20d;
+  }
+
+  location /admin/ {
+    # rewrite ^/admin/(.*)$ /$1 break;
+    proxy_pass http://localhost:4545;
+    # proxy_redirect http://localhost:4545/ $scheme://$host/admin/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_read_timeout 20d;
+  }
+
+  location /lemtag/ {
+    # rewrite ^/admin/(.*)$ /$1 break;
+    proxy_pass http://localhost:5656;
+    # proxy_redirect http://localhost:4545/ $scheme://$host/admin/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_read_timeout 20d;
+  }
+
+  location /rbo/ {
+    # rewrite ^/admin/(.*)$ /$1 break;
+    proxy_pass http://localhost:6767;
+    # proxy_redirect http://localhost:4545/ $scheme://$host/admin/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_read_timeout 20d;
+  }
+
+  location /flask/ {
+    # rewrite ^/admin/(.*)$ /$1 break;
+    proxy_pass http://localhost:5000;
+    # proxy_redirect http://localhost:4545/ $scheme://$host/admin/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_read_timeout 20d;
+  }
+
+  ##
+  # Serving PHP on a location subtree
+  ##
+
+  # location /admin/ {
+  #   root /opt;
+  #   index index.php;
+  # }
+
+  # location ~ /admin/.*\.php$ {
+  #   root /opt;
+  #   include snippets/fastcgi-php.conf;
+
+  #   # With php7.0-cgi alone:
+  #   # fastcgi_pass 127.0.0.1:9000;
+  #   # With php7.0-fpm:
+  #   fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+  # }
+
 }
+
+# Local Variables:
+# mode: nginx
+# nginx-indent-level: 2
+# End:
