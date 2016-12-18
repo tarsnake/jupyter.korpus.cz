@@ -1,11 +1,14 @@
 [Unit]
-Description="Cull inactive Jupyter single-user sessions"
+Description=Cull inactive Jupyter single-user sessions
 After=jupyter.target
+OnFailure=notify-failed@%n
 
 [Service]
 User=jupyter
 ExecStart=/opt/jupyter/cull_idle_servers.sh
 WorkingDirectory=/opt/jupyter
+Restart=on-failure
+RestartSec=1min
 
 [Install]
 WantedBy=multi-user.target

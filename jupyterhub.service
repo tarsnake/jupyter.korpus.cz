@@ -1,12 +1,15 @@
 [Unit]
 Description=JupyterHub
 After=network-online.target
+OnFailure=notify-failed@%n
 
 [Service]
 User=jupyter
 Environment=NLTK_DATA=/opt/jupyter/nltk_data
 ExecStart=/opt/jupyter/jupyterhub.sh
 WorkingDirectory=/opt/jupyter
+Restart=on-failure
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
