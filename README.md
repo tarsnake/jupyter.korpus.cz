@@ -25,6 +25,12 @@ When installing in a virtualenv and running JupyterHub without root privileges
 it is **absolutely necessary** to add the virtualenv bin directory to the
 `secure_path` in the sudoers file.
 
+## Permissions and owners
+
+This whole setup is very finicky about having the correct file permissions and
+owners set on some crucial files. Run `./fix_permissions.sh` if you experience
+problems (or take a look at the script to identify potential pain points).
+
 # Python environments
 
 The setup takes into account two types of Python environments: **server**
