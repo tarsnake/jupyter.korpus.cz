@@ -2,5 +2,5 @@
 nltk_data
 *.deleteme
 debug
-*.sqlite
+*.sqlite*
 jupyterhub_cookie_secret
