@@ -18,18 +18,50 @@ your own box, drop me a line, I'll be glad to help! Features include:
 
 This entire directory should be placed at `/opt/jupyter` on the server. A
 virtualenv is expected under `./.venv`, and the NLTK data directory under
-`./nltk_data`.
+`./nltk_data` (if it's not there, nothing catastrophic will happen, NLTK will
+just complain if you try to load a resource).
+
+## Add a user who will run JupyterHub
+
+It's not a good idea to run JupyterHub as all-powerful root. Instead, create a
+new user specifically for this task:
+
+```sh
+useradd -r jupyter
+```
 
 When installing in a virtualenv and running JupyterHub without root privileges
 (see [JupyterHub wiki](https://github.com/jupyterhub/jupyterhub/wiki/Using-sudo-to-run-JupyterHub-without-root-privileges)),
 it is **absolutely necessary** to add the virtualenv bin directory to the
-`secure_path` in the sudoers file.
+`secure_path` in the sudoers file and make some additional configuration.
+Either follow the linked tutorial on the JupyterHub wiki, or update your
+`/etc/sudoers` based on the snippet in `./sudoers`.
 
 ## Permissions and owners
 
 This whole setup is very finicky about having the correct file permissions and
-owners set on some crucial files. Run `./fix_permissions.sh` if you experience
-problems (or take a look at the script to identify potential pain points).
+owners set on some crucial files. Run `./fix_permissions.sh jupyter` if you
+experience problems (or take a look at the script to identify potential pain
+points).
+
+## Systemd service files
+
+Install and enable the `*.service` files. Optionally comment out the
+`OnFailure` handler if you don't have a `notify-failed` service on your system.
+
+## Securing your connection
+
+Install Letsencrypt and get an SSL certificate. Optionally set up
+`./letsencrypt-renew.sh` as a cron job for automatic renewal of the
+certificate.
+
+## Reverse proxy
+
+You'll need Nginx. Use `./jupyter.nginx` as a template for the config, just
+remove the `location` directives you won't be needing, change the URL patterns
+to match your domain and set the correct path to the SSL certificates you
+obtained in the previous step in the `ssl_certificate` and
+`ssl_certificate_key` directives.
 
 # Python environments
 
