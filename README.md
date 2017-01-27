@@ -73,6 +73,11 @@ etc., you may need to tweak it yourself after the update, which may result in
 significant downtime for your users. If you want to treat your users to a newly
 released version of Python, **update the default kernel instead** (see below).
 
+Once you *do* decide to upgrade the server packages, be careful especially with
+JupyterHub, as its user database schema might change between major versions
+(remember that 0.x is major by semver rules). Run `jupyterhub upgrade-db` to
+migrate.
+
 ## Kernels
 
 These are the environments used to spawn the kernels users will interact with.
