@@ -1,4 +1,4 @@
-venv
+.venv
 nltk_data
 *.deleteme
 debug

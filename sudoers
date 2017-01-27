@@ -8,7 +8,7 @@
 #
 Defaults	env_reset
 Defaults	mail_badpass
-Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/opt/jupyter/venv/bin/"
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/opt/jupyter/.venv/bin/"
 
 # Host alias specification
 
@@ -29,5 +29,5 @@ root	ALL=(ALL:ALL) ALL
 
 #includedir /etc/sudoers.d
 
-Cmnd_Alias JUPYTER_CMD=/opt/jupyter/venv/bin/sudospawner
+Cmnd_Alias JUPYTER_CMD=/opt/jupyter/.venv/bin/sudospawner
 jupyter ALL=(ALL) NOPASSWD:JUPYTER_CMD

@@ -1,7 +1,6 @@
 #!/bin/sh
 
-cd /opt/jupyter
-. venv/bin/activate
+. .venv/bin/activate
 rm debug
 which jupyterhub >debug
 which python >>debug

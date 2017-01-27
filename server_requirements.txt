@@ -1,0 +1,5 @@
+jupyter==1.0.0
+jupyterhub==0.7.2
+jupyterlab==0.14.0
+sudospawner==0.3.0
+widgetsnbextension==1.2.6
