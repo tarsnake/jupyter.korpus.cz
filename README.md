@@ -126,7 +126,7 @@ path to your custom acquired `python` and `pip`):
 
 ```sh
 path/to/pip install ipykernel
-path/to/python -m ipykernel --prefix /opt/jupyter/.venv --name my-kernel-name --display-name 'My human-readable kernel name'
+path/to/python -m ipykernel install --prefix /opt/jupyter/.venv --name my-kernel-name --display-name 'My human-readable kernel name'
 ```
 
 Kernel configuration is stored under `./.venv/share/jupyter/kernels`, so you
@@ -147,7 +147,7 @@ replicate the kernel environment I suggest as a starting point with:
 ```sh
 conda env create -f kernel_environment.yml
 source activate python-3.6  # see `name` field in `kernel_environment.yml`
-python -m ipykernel --prefix /opt/jupyter/.venv --name python3 --display-name 'Python 3'
+python -m ipykernel install --prefix /opt/jupyter/.venv --name python3 --display-name 'Python 3'
 ```
 
 This replaces the default Python 3 kernel (which would have been the one
@@ -212,7 +212,7 @@ additional kernel and letting your users switch at will.
 This may break stuff if some of the libraries have API changes (obviously).
 
 ```sh
-conda --name python-3.6 update --all
+conda update --name python-3.6 --all
 ```
 
 To update pip packages, activate the environment, get the list of installed
@@ -227,7 +227,7 @@ packages?)
 conda create --name python-2 python=2
 source activate python-2
 conda install ipykernel
-python -m ipykernel --prefix /opt/jupyter/.venv --name python2 --display-name 'Python 2'
+python -m ipykernel install --prefix /opt/jupyter/.venv --name python2 --display-name 'Python 2'
 ```
 
 Seriously though, switch to Python 3 already! It's gorgeous :)
