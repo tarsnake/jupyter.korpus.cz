@@ -5,7 +5,7 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-files=". jupyterhub.sqlite jupyterhub_cookie_secret debug"
+files=". jupyterhub.sqlite jupyterhub_cookie_secret"
 
 for file in $files; do
   chown "$1"."$1" "$file"
@@ -13,6 +13,4 @@ done
 
 chmod 755 .
 chmod 644 jupyterhub.sqlite
-chmod 644 debug
 chmod 600 jupyterhub_cookie_secret
-

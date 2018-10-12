@@ -4,3 +4,4 @@ nltk_data
 debug
 *.sqlite*
 jupyterhub_cookie_secret
+jupyterhub-proxy.pid

@@ -1,0 +1,38 @@
+# core functionality
+jupyter
+jupyterhub
+jupyterlab
+nbconvert
+nbgrader
+sudospawner
+# required by cull_idle_servers.py
+python-dateutil
+
+# command line tools
+pip
+ipdb
+ipython
+black
+flake8
+
+# stdlib replacements
+regex
+requests
+lxml
+
+# general scientific libraries
+numpy
+pandas
+openpyxl
+scipy
+scikit-learn
+
+# visualization
+matplotlib
+seaborn
+
+# natural language libraries
+nltk
+gensim
+git+https://github.com/dlukes/corpy
+feedparser

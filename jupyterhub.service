@@ -7,7 +7,7 @@ OnFailure=notify-failed@%n
 User=jupyter
 Environment=NLTK_DATA=/opt/jupyter/nltk_data
 Environment=JULIA_PKGDIR=/opt/julia
-ExecStart=/opt/jupyter/jupyterhub.sh
+ExecStart=/opt/pyenv/shims/jupyterhub
 WorkingDirectory=/opt/jupyter
 Restart=on-failure
 RestartSec=3

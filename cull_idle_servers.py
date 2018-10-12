@@ -16,6 +16,7 @@ Generate an API token and store it in `JPY_API_TOKEN`:
 """
 
 import datetime
+import pytz
 import json
 import os
 
@@ -37,7 +38,7 @@ def cull_idle(url, api_token, timeout):
     req = HTTPRequest(url=url + '/api/users',
         headers=auth_header,
     )
-    now = datetime.datetime.utcnow()
+    now = datetime.datetime.now(datetime.timezone.utc)
     cull_limit = now - datetime.timedelta(seconds=timeout)
     client = AsyncHTTPClient()
     resp = yield client.fetch(req)
@@ -54,7 +55,7 @@ def cull_idle(url, api_token, timeout):
             futures.append((user['name'], client.fetch(req)))
         elif user['server'] and last_activity > cull_limit:
             app_log.debug("Not culling %s (active since %s)", user['name'], last_activity)
-    
+
     for (name, f) in futures:
         yield f
         app_log.debug("Finished culling %s", name)
@@ -63,13 +64,13 @@ if __name__ == '__main__':
     define('url', default='http://127.0.0.1:8081/hub', help="The JupyterHub API URL")
     define('timeout', default=600, help="The idle timeout (in seconds)")
     define('cull_every', default=0, help="The interval (in seconds) for checking for idle servers to cull")
-    
+
     parse_command_line()
     if not options.cull_every:
         options.cull_every = options.timeout // 2
-    
+
     api_token = os.environ['JPY_API_TOKEN']
-    
+
     loop = IOLoop.current()
     cull = lambda : cull_idle(options.url, api_token, options.timeout)
     # run once before scheduling periodic call
@@ -81,4 +82,3 @@ if __name__ == '__main__':
         loop.start()
     except KeyboardInterrupt:
         pass
-    

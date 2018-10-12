@@ -1,5 +1,0 @@
-# 8< ----------------------------------------------------------------------- >8
-Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/opt/jupyter/.venv/bin/"
-Cmnd_Alias JUPYTER_CMD=/opt/jupyter/.venv/bin/sudospawner
-jupyter ALL=(ALL) NOPASSWD:JUPYTER_CMD
-# 8< ----------------------------------------------------------------------- >8

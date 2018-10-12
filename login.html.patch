@@ -1,0 +1,30 @@
+diff -U5 a/login.html b/login.html
+--- a/login.html	2017-12-08 09:40:17.451223379 +0100
++++ b/login.html	2017-12-08 10:10:43.016816538 +0100
+@@ -59,10 +59,26 @@
+       class='btn btn-jupyter'
+       value='Sign In'
+       tabindex="3"
+     />
+   </div>
++  <div>
++    <p>Looking instead for...</p>
++    <ul>
++      <li><a href="/r">RStudio</a></li>
++      <li>the <a href="/admin">admin interface</a> to manage your account</li>
++    </ul>
++    <p>
++      Need assistance? Let us know at
++      <script type="text/javascript">
++      <!--
++                                    h='&#x6b;&#x6f;&#114;&#112;&#x75;&#x73;&#46;&#x63;&#122;';a='&#64;';n='&#108;&#x75;&#x6b;&#x65;&#x73;';e=n+a+h;
++      document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
++      // -->
++      </script><noscript>&#108;&#x75;&#x6b;&#x65;&#x73;&#32;&#x61;&#116;&#32;&#x6b;&#x6f;&#114;&#112;&#x75;&#x73;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#122;</noscript>!
++    </p>
++  </div>
+ </form>
+ {% endif %}
+ </div>
+ {% endblock login %}
+ 
