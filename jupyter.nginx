@@ -50,6 +50,7 @@ server {
   }
 
   location /r/ {
+    client_max_body_size 50M;
     rewrite ^/r/(.*)$ /$1 break;
     proxy_pass http://localhost:8787;
     proxy_redirect http://localhost:8787/ $scheme://$host/r/;
