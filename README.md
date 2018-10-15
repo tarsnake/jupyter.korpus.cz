@@ -48,11 +48,48 @@ to match your domain and set the correct path to the SSL certificates you
 obtained in the previous step in the `ssl_certificate` and
 `ssl_certificate_key` directives.
 
-# Installation / Upgrade
+# Installation / upgrade
 
-Run `install_jupyter.sh`. During a first time setup, you'll probably hit some
-snags, because so far I've just used it on a machine with an existing
-installation.
+Run `install_jupyter.sh` for Jupyter/Python and `install_R.sh` for R. During a
+first time setup, you'll probably hit some snags, because so far I've just used
+these on a machine with an existing installation. And they're pretty brittle
+even so, especially the R one.
+
+# Installing / upgrading packages
+
+## Python
+
+Add package to `requirements.txt` and run:
+
+```sh
+pip3 install -r requirements.txt
+```
+
+The `requirements.txt` file is used to reinstall all packages when a new
+version of Python is installed.
+
+If you want to update installed packages, use the `-U` option to `pip`.
+
+## R
+
+```
+$ sudo -i
+# R
+> install.packages(...)
+```
+
+When R is updated, a list of installed packages is compiled so that most of
+them (= those coming from CRAN) can be easily automatically reinstalled after
+the update.
+
+If you want to just update the packages (without updating to a new version of
+R):
+
+```R
+$ sudo -i
+# R
+> update.packages(ask=FALSE)
+```
 
 # Notes
 
