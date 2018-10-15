@@ -12,7 +12,6 @@ lsb_release -a
 >&2 echo 'Your current version of R is:'
 if ! R --version; then
   >&2 echo -e 'NO VERSION OF R FOUND\n'
-  no_r=1
 fi
 
 ## Add repo
@@ -25,33 +24,26 @@ EOF
 read -q 'YN?Proceed?'
 >&2 echo
 
-## Backup list of packages
+## Remove libraries for old version of R
 
 wipe-R-lib () {
   sudo rm -rf $1
   sudo mkdir -p $1
 }
 
-if [[ -z $no_r ]]; then
-  >&2 echo 'Backing up list of installed packages...'
-  ./backup_R_package_list.R
-  sudo apt-get purge -y 'r-cran.*'
-  wipe-R-lib /usr/lib/R/library
-  wipe-R-lib /usr/lib/R/site-library
-  wipe-R-lib /usr/local/lib/R/site-library
-fi
+>&2 echo 'Removing libraries for old version of R...'
+sudo apt-get purge -y 'r-cran.*'
+wipe-R-lib /usr/lib/R/library
+wipe-R-lib /usr/lib/R/site-library
+wipe-R-lib /usr/local/lib/R/site-library
 
-## Install R
+## Install new version of R
 
 >&2 echo 'Installing R...'
 
 sudo apt-get update
 sudo apt-get install -y r-base r-base-dev
 
-## Restore packages from list
+## Reinstall libraries
 
-if [[ -z $no_r ]]; then
-  >&2 echo 'Restoring previously installed packages...'
-  sudo ./reinstall_R_package_list.R packages.RData
-  # rm -f packages.RData
-fi
+sudo ./requirements.R

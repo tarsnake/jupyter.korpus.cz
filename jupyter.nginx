@@ -49,6 +49,11 @@ server {
     proxy_set_header X-NginX-Proxy true;
   }
 
+  location /maintenance/ {
+    root /opt/maintenance;
+    try_files $uri $uri/ /maintenance/index.html;
+  }
+
   location /r/ {
     client_max_body_size 50M;
     rewrite ^/r/(.*)$ /$1 break;
@@ -68,6 +73,16 @@ server {
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection $connection_upgrade;
     proxy_read_timeout 20d;
+  }
+
+  location /shiny-admin/ {
+      rewrite ^/shiny-admin/(.*)$ /$1 break;
+      proxy_pass http://localhost:4151;
+      proxy_redirect http://localhost:4151/ $scheme://$host/shiny-admin/;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection $connection_upgrade;
+      proxy_read_timeout 20d;
   }
 
   location /admin/ {
@@ -110,6 +125,21 @@ server {
     proxy_read_timeout 20d;
   }
 
+  location /quetzal/ {
+    # rewrite ^/admin/(.*)$ /$1 break;
+    proxy_pass http://localhost:1234;
+    # proxy_redirect http://localhost:4545/ $scheme://$host/admin/;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection $connection_upgrade;
+    proxy_read_timeout 20d;
+    # tohle nefunguje, zřejmě proto, že jupyter.ucnk/quetzal se přesměruje
+    # na jupyter.korpus.cz/quetzal, takže request přichází zvenčí pod jinou IP
+    # adresou kvůli NAT...?
+    # allow 192.168.1.0/24;
+    # deny all;
+  }
+
   location /resize/ {
     client_max_body_size 50M;
     # rewrite ^/admin/(.*)$ /$1 break;
@@ -120,6 +150,19 @@ server {
     proxy_set_header Connection $connection_upgrade;
     proxy_read_timeout 20d;
   }
+
+  # location /gogs/ {
+  #   client_max_body_size 50M;
+  #   # rewrite ^/admin/(.*)$ /$1 break;
+  #   # NOTE: for fuck's sake, the final / on the next line is the difference
+  #   # between everything working fine and static resources not being loaded
+  #   # (and routes not being found). This design of URL semantics is really
+  #   # brittle. Anyhow, sould I change the other proxy passes as well?
+  #   proxy_pass http://localhost:6065/;
+  #   # proxy_redirect http://localhost:4545/ $scheme://$host/admin/;
+  #   proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade;
+  #   proxy_set_header Connection $connection_upgrade; proxy_read_timeout 20d;
+  # }
 
   ##
   # Serving PHP on a location subtree

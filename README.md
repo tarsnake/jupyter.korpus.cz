@@ -72,24 +72,13 @@ If you want to update installed packages, use the `-U` option to `pip`.
 
 ## R
 
-```
-$ sudo -i
-# R
-> install.packages(...)
-```
-
-When R is updated, a list of installed packages is compiled so that most of
-them (= those coming from CRAN) can be easily automatically reinstalled after
-the update.
+Add an entry to `requirements.R`, which keeps track of which packages people
+are using and how to get them, and run the script. The script is also
+automatically run upon installation of a new version of R, after the previous
+version's libraries have been purged.
 
 If you want to just update the packages (without updating to a new version of
-R):
-
-```R
-$ sudo -i
-# R
-> update.packages(ask=FALSE)
-```
+R), run `update.packages(ask=FALSE)` in R under `sudo -i`.
 
 # Notes
 
