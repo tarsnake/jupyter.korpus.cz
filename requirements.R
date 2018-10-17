@@ -34,10 +34,12 @@ install_package <- function(package) {
 deps <- c(
   "libblas-dev",
   "liblapack-dev",
+  "libmpfr-dev",
   "libgl-dev",
-  "libjpeg-dev",
   "libglu-dev",
-  "libmpfr-dev"
+  "libjpeg-dev",
+  "libpoppler-cpp-dev",
+  "libapparmor-dev"
 )
 
 packages <- list(
@@ -56,7 +58,7 @@ packages <- list(
     method="apt"
   ),
 
-  # data manipulation libraries
+  # data manipulation libraries (in addition to tidyverse above)
   list(
     name="jsonlite",
     method="apt"
@@ -74,10 +76,15 @@ packages <- list(
   # visualization
   "alluvial",
   "Cairo",
+  "ellipse",
   "ggdendro",
   "ggrepel",
   "ggthemes",
   "googleVis",
+  list(
+    name="gridExtra",
+    method="apt"
+  ),
   list(
     name="igraph",
     method="apt"
@@ -87,6 +94,7 @@ packages <- list(
     method="apt"
   ),
   "networkD3",
+  "pals",
   "plotluck",
   "plotly",
   "qgraph",
@@ -99,6 +107,8 @@ packages <- list(
   "corpora",
   "languageR",
   "lsa",
+  "quanteda",
+  "readtext",
   list(
     name="Rling",
     locator="https://benjamins.com/sites/z.195/download/r_package/Rling_1.0.tar.gz"
@@ -109,8 +119,10 @@ packages <- list(
   ),
 
   # apps
+  "DT",
   "htmlwidgets",
   "shiny",
+  "shinyBS",
   "shinyjs",
 
   # document generation
@@ -138,6 +150,7 @@ packages <- list(
   "Rmisc",
 
   # modeling
+  "compute.es",
   "ez",
   list(
     name="limma",
@@ -152,14 +165,20 @@ packages <- list(
     name="nlme",
     method="apt"
   ),
-  list(
-    name="rjags",
-    method="apt"
-  ),
 
   # exploratory
   "FactoMineR",
   "psych",
+
+  # Bayesian
+  "BayesDA",
+  "coda",
+  list(
+    name="rjags",
+    method="apt"
+  ),
+  "runjags",
+  "rstan",
 
   # programming with R
   "hash",
@@ -189,6 +208,7 @@ packages <- list(
   ),
   "data.table",
   "distances",
+  "entropy",
   "fields",
   "fortunes",
   "gee",
