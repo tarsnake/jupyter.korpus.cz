@@ -10,6 +10,7 @@ python-dateutil
 
 # command line tools
 pip
+pipenv
 ipdb
 ipython
 black
