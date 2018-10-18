@@ -37,6 +37,9 @@ wipe-R-lib /usr/lib/R/library
 wipe-R-lib /usr/lib/R/site-library
 wipe-R-lib /usr/local/lib/R/site-library
 
+>&2 echo 'Removing all user-installed R libraries...'
+sudo find /home -maxdepth 3 -ipath '*/R/*-library' -exec rm -rf {} \;
+
 ## Install new version of R
 
 >&2 echo 'Installing R...'
