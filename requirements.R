@@ -52,6 +52,7 @@ packages <- list(
     name="formatR",
     method="apt"
   ),
+  "packrat",
   "pryr",
   list(
     name="RCurl",
