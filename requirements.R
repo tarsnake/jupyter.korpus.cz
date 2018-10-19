@@ -16,7 +16,7 @@ install_package <- function(package) {
     locator <- package
     method <- "default"
   }
-  installed <- suppressMessages(require(name, quietly=TRUE, character.only=TRUE))
+  installed <- suppressMessages(suppressWarnings(require(name, quietly=TRUE, character.only=TRUE)))
   if (!installed) {
     cat("Installing", name, "...\n", file=stderr())
     if (method == "default") {
